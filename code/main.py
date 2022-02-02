@@ -15,8 +15,8 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    guild = client.get_guild(936657801239986196)
-    channel = guild.get_channel(936657801239986199)
+    guild = client.get_guild(id_guild)
+    channel = guild.get_channel(id_channel)
     await channel.send(f'Bienvenue sur le serveur {member.mention} !')
     await member.send(f'Bienvenue sur le {guild.name} server, {member.mention}!')
 
