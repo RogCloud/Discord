@@ -1,4 +1,5 @@
 from operator import imod
+from pickle import FALSE
 import discord
 from discord.ext import commands
 import os
@@ -36,12 +37,12 @@ async def on_member_join(member):
     embed.set_author(name=f'{member.name}', icon_url=f'{member.avatar_url}')
     embed.set_footer(text=f'{member.guild}', icon_url=f'{member.guild.icon_url}')
     embed.timestamp=datetime.datetime.utcnow()
-    embed.add_field(name='User ID :', value=member.id)
-    embed.add_field(name='User Name :', value=member.display_name)
-    embed.add_field(name='Server Name :', value=guild)
-    embed.add_field(name='User Serial :', value=len(list(guild.members)))
-    embed.add_field(name='Created_at :', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
-    embed.add_field(name='Joined_at :', value=member.joined_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
+    embed.add_field(name='User ID :', value=member.id, inline=False)
+    embed.add_field(name='User Name :', value=member.display_name, inline=True)
+    embed.add_field(name='Server Name :', value=guild, inline=True)
+    embed.add_field(name='User Serial :', value=len(list(guild.members)), inline=True)
+    embed.add_field(name='Created_at :', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'), inline=True)
+    embed.add_field(name='Joined_at :', value=member.joined_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'), inline=True)
     
     channel = discord.utils.get(member.guild.channels, name='join-member')
     await channel.send(embed=embed)
@@ -61,12 +62,12 @@ async def on_member_remove(member):
     embed.set_author(name=f'{member.name}', icon_url=f'{member.avatar_url}')
     embed.set_footer(text=f'{member.guild}', icon_url=f'{member.guild.icon_url}')
     embed.timestamp=datetime.datetime.utcnow()
-    embed.add_field(name='User ID :', value=member.id)
-    embed.add_field(name='User Name :', value=member.display_name)
-    embed.add_field(name='Server Name :', value=guild)
-    embed.add_field(name='User Serial :', value=len(list(guild.members)))
-    embed.add_field(name='Created_at :', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
-    embed.add_field(name='leaved_at :', value=member.joined_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'))
+    embed.add_field(name='User ID :', value=member.id, inline=False)
+    embed.add_field(name='User Name :', value=member.display_name, inline=True)
+    embed.add_field(name='Server Name :', value=guild, inline=True)
+    embed.add_field(name='User Serial :', value=len(list(guild.members)), inline=True)
+    embed.add_field(name='Created_at :', value=member.created_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'), inline=True)
+    embed.add_field(name='leaved_at :', value=member.joined_at.strftime('%a, %#d %B %Y, %I:%M %p UTC'), inline=True)
     
     channel = discord.utils.get(member.guild.channels, name='leave-member')
     await channel.send(embed=embed)
