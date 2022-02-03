@@ -7,7 +7,7 @@ intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
 
-TOKEN = os.getenv('DISCORD_TOKEN')
+ID_TOKEN = os.getenv('DISCORD_TOKEN')
 
 @client.event
 async def on_ready():
@@ -15,17 +15,23 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    guild = client.get_guild(id_guild)
-    channel = guild.get_channel(id_channel)
-    await channel.send(f'Bienvenue sur le serveur {member.mention} !')
-    await member.send(f'Bienvenue sur le {guild.name} server, {member.mention}!')
+    channel = discord.utils.get(member.guild.channels, name='general')
+    await channel.send(f'Welcome on the new server {member.mention} !')
+    #guild = client.get_guild(id_guild))
+    #channel = client.get_channel(id_channels)
+    #await member.send(f'Bienvenue sur le {guild.name} server, {member.mention}!')
+
+@client.event
+async def on_member_remove(member):
+    channel = discord.utils.get(member.guild.channels, name='general')
+    await channel.send(f'{member.mention} has just leave the server !')
 
 @client.event
 async def on_message(message):
     username = str(message.author).split('#')[0]
     user_message = str(message.content)
     channel_message = str(message.channel)
-    print(f'{username}: {user_message} ({channel_message})')
+    #print(f'{username}: {user_message} ({channel_message})')
 
     if message.author == client.user:
         return
@@ -37,5 +43,5 @@ async def on_message(message):
         elif user_message.lower() == 'aurevoir':
             await message.channel.send(f'à bientôt {username}!')
             return
-    
-client.run(TOKEN)
+
+client.run(ID_TOKEN)
