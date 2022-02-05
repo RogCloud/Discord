@@ -1,5 +1,3 @@
-from operator import imod
-from pickle import FALSE
 import discord
 from discord.ext import commands
 import os
@@ -10,7 +8,7 @@ load_dotenv()
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents=intents)
-
+bot = commands.Bot(command_prefix="$")
 ID_TOKEN = os.getenv('DISCORD_TOKEN')
 
 #  _________
@@ -20,6 +18,7 @@ ID_TOKEN = os.getenv('DISCORD_TOKEN')
 @client.event
 async def on_ready():
     print('We have logged in as {0.user} has connected to Discord!'.format(client))
+    print('-----------------------------------------------------------')
 
 #   ___________________________
 # /                            \
@@ -51,7 +50,6 @@ async def on_member_join(member):
 # /                         \
 #  Member Leave Notification
 # \_________________________/
-
 @client.event
 async def on_member_remove(member):
     mention = member.mention
@@ -77,17 +75,21 @@ async def on_message(message):
     username = str(message.author).split('#')[0]
     user_message = str(message.content)
     channel_message = str(message.channel)
+    list_in = ['hi','hello','slt','salut','bonjour','hola']
+    list_out = ['bye','goodby','ciao','au revoir']
+    money_user = []
+    money_bot = []
+
     #print(f'{username}: {user_message} ({channel_message})')
 
     if message.author == client.user:
         return
     
-    if message.channel.name == 'general':
-        if user_message.lower() == 'bonjours':
-            await message.channel.send(f'Hello {username}!')
-            return
-        elif user_message.lower() == 'aurevoir':
-            await message.channel.send(f'à bientôt {username}!')
-            return
+    if message.content in list_in:
+        await message.channel.send(f'Hello {username}!')
+        return
+    elif message.content in list_out:
+        await message.channel.send(f'Goodbye {username}!')
+        return
 
 client.run(ID_TOKEN)
